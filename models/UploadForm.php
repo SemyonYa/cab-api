@@ -3,40 +3,47 @@
 namespace app\models;
 
 use ErrorException;
+use Throwable;
 use Yii;
 use yii\base\Model;
 use yii\helpers\FileHelper;
+use yii\web\ServerErrorHttpException;
 
 class UploadForm extends Model
 {
     /**
      * @var UploadedFile
      */
-    public $file;
+    public $files;
 
     public function rules()
     {
         return [
-            // [['file'], 'safe'],
-            [['file'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            // [['files'], 'safe'],
+            [['files'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg']
         ];
     }
 
     public function upload()
     {
         try {
-            if ($this->validate()) {
-                $path = Yii::getAlias('@webroot/images/');
+            $names = [];
+            if (!$this->hasErrors()) {
+                $path = Yii::getAlias('@webroot/' . Yii::$app->params['images_dir'] . '/');
                 FileHelper::createDirectory($path);
-                $name = Yii::$app->security->generateRandomString(20) . '.' . $this->file->extension;
-                $this->file->saveAs($path . $name);
-                return true;
+                foreach ($this->files as $file) {
+                    $extension = substr($file->name, strrpos($file->name, '.'));
+                    $name = Yii::$app->security->generateRandomString(20) . $extension;
+                    $file->saveAs($path . $name);
+                    $names[] = $name;
+                }
+                return $names;
             } else {
-                var_dump($this->getErrors());
                 return false;
             }
-        } catch (ErrorException $e) {
-            var_dump($e->getMessage());
+        } catch (Throwable $th) {
+            throw $th;
+            // throw new ServerErrorHttpException();
         }
     }
 }

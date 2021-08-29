@@ -2,19 +2,20 @@
 
 namespace app\models;
 
-use Yii;
-
 /**
  * This is the model class for table "user".
  *
  * @property int $id
- * @property string $name
+ * @property string $first_name
+ * @property string $last_name
  * @property string $login
  * @property string $role
- * @property int $age
  * @property string $birth
+ * @property string|null $password_hash
+ * @property string|null $auth_token
+ * @property int $activated
  */
-class User extends \yii\db\ActiveRecord
+class User extends UserIdentity
 {
     /**
      * {@inheritdoc}
@@ -30,12 +31,14 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'login', 'age', 'birth'], 'required'],
-            [['role'], 'string'],
-            [['age'], 'integer'],
+            [['first_name', 'last_name', 'login', 'birth', 'activated'], 'required'],
+            [['role', 'password_hash'], 'string'],
             [['birth'], 'safe'],
-            [['name'], 'string', 'max' => 100],
+            [['activated'], 'integer'],
+            [['first_name', 'last_name'], 'string', 'max' => 100],
             [['login'], 'string', 'max' => 20],
+            [['auth_token'], 'string', 'max' => 200],
+            [['login'], 'unique'],
         ];
     }
 
@@ -46,11 +49,24 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
             'login' => 'Login',
             'role' => 'Role',
-            'age' => 'Age',
             'birth' => 'Birth',
+            'password_hash' => 'Password Hash',
+            'auth_token' => 'Auth Token',
+            'activated' => 'Activated',
         ];
+    }
+
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        // удаляем небезопасные поля
+        unset($fields['auth_token'], $fields['password_hash']);
+
+        return $fields;
     }
 }

@@ -2,8 +2,6 @@
 
 namespace app\models;
 
-use app\models\domain\User;
-use app\models\helper\UserStatus;
 use Yii;
 use yii\base\Model;
 
@@ -28,14 +26,13 @@ class LoginView extends Model
         ];
     }
 
-    // public function login()
-    // {
-    //     $user = User::findOne(['login' => $this->login, 'status' => UserStatus::$active]);
-    //     if ($user) {
-    //         if (Yii::$app->security->validatePassword($this->password, $user->password_hash)) {
-    //             return $user->updateToken();
-    //         }
-    //     }
-    //     return null;
-    // }
+    public function login()
+    {
+        if ($user = User::findOne(['login' => $this->login, 'activated' => 1])) {
+            if (Yii::$app->security->validatePassword($this->password, $user->password_hash)) {
+                return $user->updateToken();
+            }
+        }
+        return null;
+    }
 }

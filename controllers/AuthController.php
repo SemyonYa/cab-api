@@ -2,33 +2,24 @@
 
 namespace app\controllers;
 
-use app\models\LoginView;
 use Yii;
-use yii\rest\Controller;
+use app\models\LoginView;
+use app\models\User;
+use Throwable;
 use yii\web\BadRequestHttpException;
+use yii\web\UnauthorizedHttpException;
 
-class AuthController extends Controller
+class AuthController extends RestController
 {
-    public $enableCsrfValidation = false;
 
-    public function behaviors()
-    {
-        return [
-            'corsFilter' => [
-                'class' => \yii\filters\Cors::class,
-                'cors' => [
-                    'Origin' => [
-                        'http://localhost:4200',
-                        'http://cab.injini.ru',
-                    ],
-                    'Access-Control-Allow-Origin' => true,
-                    'Access-Control-Allow-Credentials' => true,
-                    'Access-Control-Request-Method' => ['POST'],
-                    'Access-Control-Allow-Headers' => ['Origin', 'Content-Type', 'X-Auth-Token', 'Authorization', 'x-compress']
-                ],
-            ],
-        ];
-    }
+    public $modelClass = 'app\models\User';
+
+    // public function actions()
+    // {
+    //     $actions = parent::actions();
+    //     unset($actions['create']);
+    //     return $actions;
+    // }
 
     public function actionLogin()
     {
@@ -38,7 +29,6 @@ class AuthController extends Controller
         $password = $request->post('password');
 
         $login_view = new LoginView($login, $password);
-
         if ($login_view->validate()) {
             $token = $login_view->login();
             if ($token) {
@@ -46,5 +36,24 @@ class AuthController extends Controller
             }
         }
         throw new BadRequestHttpException('Неверные имя пользователя / пароль');
+    }
+
+    public function actionLogout()
+    {
+        try {
+            $token = Yii::$app->request->headers['Authorization'];
+            if ($token && strpos($token, 'Bearer ') === 0) {
+                $token = substr($token, 7);
+                if ($user = User::findOne(['auth_token' => $token])) {
+                    return $user;
+                    $user->auth_token = null;
+                    $user->save();
+                    return;
+                }
+            }
+            throw new UnauthorizedHttpException();
+        } catch (Throwable $th) {
+            throw new UnauthorizedHttpException();
+        }
     }
 }
