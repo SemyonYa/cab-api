@@ -14,12 +14,12 @@ class AuthController extends RestController
 
     public $modelClass = 'app\models\User';
 
-    // public function actions()
-    // {
-    //     $actions = parent::actions();
-    //     unset($actions['create']);
-    //     return $actions;
-    // }
+    public function actions()
+    {
+        $actions = parent::actions();
+        unset($actions['create'], $actions['update'], $actions['delete'], $actions['index'], $actions['view']);
+        return $actions;
+    }
 
     public function actionLogin()
     {

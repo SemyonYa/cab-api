@@ -61,9 +61,9 @@ $config = [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['auth'],
                     'pluralize' => false,
-                    'patterns' => [
-                        'POST' => 'login',
-                        'DELETE' => 'logout'
+                    'extraPatterns' => [
+                        'POST login' => 'login',
+                        'DELETE logout' => 'logout'
                     ]
                 ],
             ],

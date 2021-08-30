@@ -29,6 +29,7 @@ class LoginView extends Model
     public function login()
     {
         if ($user = User::findOne(['login' => $this->login, 'activated' => 1])) {
+            if (!$user->password_hash) return null;
             if (Yii::$app->security->validatePassword($this->password, $user->password_hash)) {
                 return $user->updateToken();
             }

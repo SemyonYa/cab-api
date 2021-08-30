@@ -33,11 +33,12 @@ class UserController extends RestController
         $user->role = Yii::$app->request->post('role');
         $user->birth = Yii::$app->request->post('birth');
         $user->activated = Yii::$app->request->post('activated');
+        $user->password_hash = Yii::$app->security->password_hash('90-=op[]');
 
         if ($user->validate()) {
             if ($user->save()) {
                 return $user;
-            } 
+            }
         } else {
             Yii::$app->response->setStatusCode(422);
             return [$user->errors];
