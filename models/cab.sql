@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Авг 29 2021 г., 23:05
--- Версия сервера: 5.6.43-log
--- Версия PHP: 7.2.22
+-- Время создания: Авг 31 2021 г., 18:06
+-- Версия сервера: 5.7.29
+-- Версия PHP: 7.3.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -25,11 +24,42 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `ctor`
+--
+
+CREATE TABLE `ctor` (
+  `id` int(11) NOT NULL,
+  `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subtitle` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL,
+  `author_name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `thumb_id` int(11) NOT NULL,
+  `tag` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `ctor_item`
+--
+
+CREATE TABLE `ctor_item` (
+  `id` int(11) NOT NULL,
+  `type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ctor_id` int(11) NOT NULL,
+  `ordering` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `image`
 --
 
 CREATE TABLE `image` (
-  `id` bigint(20) NOT NULL,
+  `id` int(20) NOT NULL,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -98,6 +128,21 @@ INSERT INTO `user` (`id`, `first_name`, `last_name`, `login`, `role`, `birth`, `
 --
 
 --
+-- Индексы таблицы `ctor`
+--
+ALTER TABLE `ctor`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `author_id` (`author_id`),
+  ADD KEY `thumb` (`thumb_id`);
+
+--
+-- Индексы таблицы `ctor_item`
+--
+ALTER TABLE `ctor_item`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ctor_id` (`ctor_id`);
+
+--
 -- Индексы таблицы `image`
 --
 ALTER TABLE `image`
@@ -115,16 +160,45 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `ctor`
+--
+ALTER TABLE `ctor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `ctor_item`
+--
+ALTER TABLE `ctor_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `image`
 --
 ALTER TABLE `image`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `ctor`
+--
+ALTER TABLE `ctor`
+  ADD CONSTRAINT `ctor_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `ctor_ibfk_2` FOREIGN KEY (`thumb_id`) REFERENCES `image` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `ctor_item`
+--
+ALTER TABLE `ctor_item`
+  ADD CONSTRAINT `ctor_item_ibfk_1` FOREIGN KEY (`ctor_id`) REFERENCES `ctor` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
