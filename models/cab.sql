@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Авг 31 2021 г., 18:06
--- Версия сервера: 5.7.29
--- Версия PHP: 7.3.17
+-- Время создания: Сен 01 2021 г., 23:35
+-- Версия сервера: 5.6.43-log
+-- Версия PHP: 7.2.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -110,18 +111,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `login`, `role`, `birth`, `password_hash`, `auth_token`, `activated`) VALUES
-(1, 'Ivan', '', 'ivan32', 'user', '1998-02-25', NULL, '', 0),
-(2, 'Stepan', '', 'step456', 'user', '1986-10-21', NULL, '', 0),
-(3, 'Afanas', '', 'af', 'admin', '1990-01-25', NULL, 'qwerty', 0),
-(6, 'qwe', 'qwe', 'qwe', 'user', '2020-12-01', NULL, NULL, 1),
-(8, 'qwe', 'qwe', 'qwerty', 'user', '2020-12-01', NULL, NULL, 1),
-(9, 'qwe', 'qwe', 'qwerrgh', 'user', '2020-12-01', NULL, NULL, 1),
-(10, 'qwe', 'qwe', 'qwefghn', 'user', '2020-12-01', NULL, NULL, 1),
-(11, 'qwe', 'qwe', 'qwew', 'user', '2020-12-01', NULL, NULL, 1),
-(12, 'qwe', 'qwe', 'qwet', 'user', '2020-12-01', NULL, NULL, 1),
-(13, 'qwe', 'qwe', 'qweg', 'user', '2020-12-01', NULL, NULL, 1),
-(14, 'first_name', 'last_name', 'login', 'user', '1990-02-15', NULL, NULL, 1),
-(15, 'first_name', 'last_name', 'login123', 'user', '1990-02-15', NULL, NULL, 1);
+(1, 'Ivan', 'Ivanov', 'ivan32', 'user', '1998-02-25', NULL, '', 0),
+(2, 'Stepan', 'Stepanov', 'step456', 'user', '1986-10-21', NULL, '', 0),
+(3, 'Afanas', 'Afanasov', 'af', 'admin', '1990-01-25', NULL, 'qwerty', 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -163,13 +155,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `ctor`
 --
 ALTER TABLE `ctor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT для таблицы `ctor_item`
 --
 ALTER TABLE `ctor_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `image`

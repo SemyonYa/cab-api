@@ -39,4 +39,21 @@ class RestController extends ActiveController
     public function checkAccess($action, $model = null, $params = [])
     {
     }
+
+
+    protected function modelErrorsTo422Response($errors, $custom_error = null)
+    {
+        if ($custom_error) {
+            array_unshift($errors, ['message' => $custom_error]);
+        }
+        $response_errors = [];
+        foreach ($errors as $error) {
+            foreach ($error as $error_item) {
+                $response_errors[] = [
+                    'message' => $error_item
+                ];
+            }
+        }
+        return $response_errors;
+    }
 }

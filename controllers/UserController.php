@@ -18,7 +18,7 @@ class UserController extends RestController
     {
         $actions = parent::actions();
 
-        unset($actions['create']);
+        // unset($actions['create']);
 
         return $actions;
     }
@@ -33,7 +33,7 @@ class UserController extends RestController
         $user->role = Yii::$app->request->post('role');
         $user->birth = Yii::$app->request->post('birth');
         $user->activated = Yii::$app->request->post('activated');
-        $user->password_hash = Yii::$app->security->password_hash('90-=op[]');
+        $user->password_hash = Yii::$app->security->generatePasswordHash('90-=op[]');
 
         if ($user->validate()) {
             if ($user->save()) {
