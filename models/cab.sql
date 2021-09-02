@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Сен 01 2021 г., 23:35
--- Версия сервера: 5.6.43-log
--- Версия PHP: 7.2.22
+-- Время создания: Сен 02 2021 г., 18:51
+-- Версия сервера: 5.7.29
+-- Версия PHP: 7.3.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -111,9 +110,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `login`, `role`, `birth`, `password_hash`, `auth_token`, `activated`) VALUES
-(1, 'Ivan', 'Ivanov', 'ivan32', 'user', '1998-02-25', NULL, '', 0),
-(2, 'Stepan', 'Stepanov', 'step456', 'user', '1986-10-21', NULL, '', 0),
-(3, 'Afanas', 'Afanasov', 'af', 'admin', '1990-01-25', NULL, 'qwerty', 0);
+(22, 'admin', 'admin', 'admin', 'admin', '1968-10-21', '$2y$13$Ed66Z3OmuiZUcPq6P5qhW.FRuHeVbXhORcGXP1u9uC/eh2z30I9Fy', '4kqvDFyAh6L0Nh7VY-2UMD6I_a7WXLxTiQ9AjZrgh-EnCpw8h7SeTM7VBLB6x2vgUBia1TEBblL-bJR-4mFGqfIFjAfSxDjmlW6DbU82Wp2vtdU37BVP6Hl7QPrjpP5S', 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -173,7 +170,7 @@ ALTER TABLE `image`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

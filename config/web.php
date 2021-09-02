@@ -55,7 +55,15 @@ $config = [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['user', 'image', 'ctor'],
+                    'controller' => ['image', 'ctor'],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['user'],
+                    'extraPatterns' => [
+                        'GET profile' => 'view-profile',
+                        'PUT profile' => 'update-profile'
+                    ]
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',

@@ -7,6 +7,7 @@ use Exception;
 use Yii;
 use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 use yii\web\UnprocessableEntityHttpException;
 
@@ -18,7 +19,7 @@ class UserController extends RestController
     {
         $actions = parent::actions();
 
-        // unset($actions['create']);
+        unset($actions['create'], $actions['update']);
 
         return $actions;
     }
@@ -33,7 +34,16 @@ class UserController extends RestController
         $user->role = Yii::$app->request->post('role');
         $user->birth = Yii::$app->request->post('birth');
         $user->activated = Yii::$app->request->post('activated');
-        $user->password_hash = Yii::$app->security->generatePasswordHash('90-=op[]');
+        $password = Yii::$app->request->post('password');
+        $password_confirm = Yii::$app->request->post('password_confirm');
+
+        if (trim($password) !== '' && trim($password_confirm) !== '' && $password === $password_confirm) {
+            $user->password_hash = Yii::$app->security->generatePasswordHash($password);
+        } else {
+            Yii::$app->response->setStatusCode(422);
+            return $this->modelErrorsTo422Response([], 'Incorrect password items');
+        }
+
 
         if ($user->validate()) {
             if ($user->save()) {
@@ -44,5 +54,54 @@ class UserController extends RestController
             return [$user->errors];
         }
         throw new ServerErrorHttpException();
+    }
+
+    public function actionUpdate($id)
+    {
+        $user = User::findOne($id);
+
+        if (!$user) {
+            throw new NotFoundHttpException();
+        }
+
+        $user->first_name = Yii::$app->request->post('first_name');
+        $user->last_name = Yii::$app->request->post('last_name');
+        $user->login = Yii::$app->request->post('login');
+        $user->role = Yii::$app->request->post('role');
+        $user->birth = Yii::$app->request->post('birth');
+        $user->activated = Yii::$app->request->post('activated');
+        $password = Yii::$app->request->post('password');
+        $password_confirm = Yii::$app->request->post('password_confirm');
+
+        if ($password === $password_confirm) {
+            if (trim($password) !== '') {
+                $user->password_hash = Yii::$app->security->generatePasswordHash($password);
+            }
+        } else {
+            Yii::$app->response->setStatusCode(422);
+            return $this->modelErrorsTo422Response([], 'Incorrect password items');
+        }
+
+        if ($user->validate()) {
+            if ($user->save()) {
+                return $user;
+            }
+        } else {
+            Yii::$app->response->setStatusCode(422);
+            return [$user->errors];
+        }
+        throw new ServerErrorHttpException();
+    }
+    
+    public function actionViewProfile()
+    {
+        // $token = Yii::$app->request->headers['Authorization'];
+        
+        // $identity = User::findIdentityByAccessToken();
+        return null;
+    }
+
+    public function actionUpdateProfile()
+    {
     }
 }
