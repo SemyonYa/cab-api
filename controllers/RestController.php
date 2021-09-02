@@ -12,12 +12,12 @@ class RestController extends ActiveController
     {
         $behaviors = parent::behaviors();
 
-        // $auth = $behaviors['authenticator'];
-        // $behaviors['authenticator'] = ['class' => HttpBearerAuth::class];
-        // $controllersWithoutBearer = ['auth'];
-        // if (in_array(Yii::$app->controller->id, $controllersWithoutBearer)) {
-        //     $behaviors['authenticator'] = $auth;
-        // }
+        $auth = $behaviors['authenticator'];
+        $behaviors['authenticator'] = ['class' => HttpBearerAuth::class];
+        $controllersWithoutBearer = ['auth'];
+        if (in_array(Yii::$app->controller->id, $controllersWithoutBearer)) {
+            $behaviors['authenticator'] = $auth;
+        }
 
         $behaviors['corsFilter'] = [
             'class' => \yii\filters\Cors::class,

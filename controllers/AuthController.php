@@ -21,7 +21,8 @@ class AuthController extends RestController
         return $actions;
     }
 
-    public function actionLogin()
+    /** Login action */
+    public function actionCreate()
     {
         $request = Yii::$app->request;
 
@@ -38,14 +39,15 @@ class AuthController extends RestController
         throw new BadRequestHttpException('Неверные имя пользователя / пароль');
     }
 
-    public function actionLogout()
+    /** Logout action */
+    public function actionDelete()
     {
         try {
             $token = Yii::$app->request->headers['Authorization'];
             if ($token && strpos($token, 'Bearer ') === 0) {
                 $token = substr($token, 7);
                 if ($user = User::findOne(['auth_token' => $token])) {
-                    return $user;
+                    // return $user;
                     $user->auth_token = null;
                     $user->save();
                     return;

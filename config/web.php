@@ -62,6 +62,7 @@ $config = [
                     'controller' => ['user'],
                     'extraPatterns' => [
                         'GET profile' => 'view-profile',
+                        'OPTIONS profile' => 'options',
                         'PUT profile' => 'update-profile'
                     ]
                 ],
@@ -69,10 +70,10 @@ $config = [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['auth'],
                     'pluralize' => false,
-                    'extraPatterns' => [
-                        'POST login' => 'login',
-                        'DELETE logout' => 'logout'
-                    ]
+                    // 'patterns' => [
+                    //     'POST' => 'create',
+                    //     'DELETE' => 'logout'
+                    // ]
                 ],
             ],
         ],

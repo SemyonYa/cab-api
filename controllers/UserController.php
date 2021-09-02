@@ -92,16 +92,56 @@ class UserController extends RestController
         }
         throw new ServerErrorHttpException();
     }
-    
+
     public function actionViewProfile()
     {
-        // $token = Yii::$app->request->headers['Authorization'];
-        
+        $token = Yii::$app->request->headers['Authorization'];
+        if ($token && strpos($token, 'Bearer ') === 0) {
+            $token = substr($token, 7);
+            if ($user = User::findOne(['auth_token' => $token])) {
+                return $user;
+            }
+        }
         // $identity = User::findIdentityByAccessToken();
-        return null;
+        return $token;
     }
 
     public function actionUpdateProfile()
     {
+        $user = null;
+        $token = Yii::$app->request->headers['Authorization'];
+        if ($token && strpos($token, 'Bearer ') === 0) {
+            $token = substr($token, 7);
+            $user = User::findOne(['auth_token' => $token]);
+        }
+
+        if (!$user) {
+            throw new NotFoundHttpException();
+        }
+
+        $user->first_name = Yii::$app->request->post('first_name');
+        $user->last_name = Yii::$app->request->post('last_name');
+        $user->birth = Yii::$app->request->post('birth');
+        $password = Yii::$app->request->post('password');
+        $password_confirm = Yii::$app->request->post('password_confirm');
+
+        if ($password === $password_confirm) {
+            if (trim($password) !== '') {
+                $user->password_hash = Yii::$app->security->generatePasswordHash($password);
+            }
+        } else {
+            Yii::$app->response->setStatusCode(422);
+            return $this->modelErrorsTo422Response([], 'Incorrect password items');
+        }
+
+        if ($user->validate()) {
+            if ($user->save()) {
+                return $user;
+            }
+        } else {
+            Yii::$app->response->setStatusCode(422);
+            return [$user->errors];
+        }
+        throw new ServerErrorHttpException();
     }
 }
