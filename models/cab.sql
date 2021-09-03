@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Сен 02 2021 г., 18:51
+-- Время создания: Сен 03 2021 г., 14:31
 -- Версия сервера: 5.7.29
 -- Версия PHP: 7.3.17
 
@@ -51,6 +51,29 @@ CREATE TABLE `ctor_item` (
   `ctor_id` int(11) NOT NULL,
   `ordering` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `filial`
+--
+
+CREATE TABLE `filial` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emails` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phones` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `addresses` text COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `filial`
+--
+
+INSERT INTO `filial` (`id`, `name`, `description`, `code`, `emails`, `phones`, `addresses`) VALUES
+(1, 'Клиника \"ОРТУМ\"', 'Клиника реабилитации опорно-двигательного  аппарата', 'Москва', 'moscow@ortum.ru\r\nmoscow2@ortum.ru', '+7 (000) 789-79-79\r\n+7 (000) 789-69-79\r\n+7 (000) 989-79-79', 'Москва, переулок Гранитный, 4/1');
 
 -- --------------------------------------------------------
 
@@ -110,7 +133,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `login`, `role`, `birth`, `password_hash`, `auth_token`, `activated`) VALUES
-(22, 'admin', 'admin', 'admin', 'admin', '1968-10-21', '$2y$13$Ed66Z3OmuiZUcPq6P5qhW.FRuHeVbXhORcGXP1u9uC/eh2z30I9Fy', '4kqvDFyAh6L0Nh7VY-2UMD6I_a7WXLxTiQ9AjZrgh-EnCpw8h7SeTM7VBLB6x2vgUBia1TEBblL-bJR-4mFGqfIFjAfSxDjmlW6DbU82Wp2vtdU37BVP6Hl7QPrjpP5S', 1);
+(22, 'admin', 'admin', 'admin', 'admin', '1968-10-21', '$2y$13$Ed66Z3OmuiZUcPq6P5qhW.FRuHeVbXhORcGXP1u9uC/eh2z30I9Fy', 'n6cEAWshF53AzuUc5crkdY6mfGz6qlcmXD6iCz3rkVnxdIssFjKu0NFp5LUPmEWynIdWRktueYRbpJsu9rKiMjxj-zzaIkjIAa1SOjHvESNKEVJCdfbsZJv_SendNhmt', 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -130,6 +153,12 @@ ALTER TABLE `ctor`
 ALTER TABLE `ctor_item`
   ADD PRIMARY KEY (`id`),
   ADD KEY `ctor_id` (`ctor_id`);
+
+--
+-- Индексы таблицы `filial`
+--
+ALTER TABLE `filial`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `image`
