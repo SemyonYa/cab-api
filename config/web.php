@@ -26,16 +26,14 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-            'enableSession' => false
+            'enableSession' => false,
+            'loginUrl' => null,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
         'log' => [
@@ -55,7 +53,32 @@ $config = [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['image', 'ctor', 'filial'],
+                    'controller' => ['image', 'filial'],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['ctor'],
+                    'extraPatterns' => [
+                        'POST <id>/children' => 'children',
+                        'OPTIONS <id>/children' => 'options'
+                    ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['public-data'],
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET info' => 'info',
+                        'GET personal' => 'personal',
+                        'GET positions' => 'positions',
+                        'GET galery' => 'galery',
+                        'GET services' => 'services',
+                        'GET programs' => 'programs',
+                        'GET articles' => 'articles',
+                        'GET article/<id>' => 'article',
+                        // 'HEAD <action>' => 'head',
+                        // 'OPTIONS <action>' => 'options',
+                    ]
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',

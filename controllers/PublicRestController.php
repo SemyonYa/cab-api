@@ -2,23 +2,13 @@
 
 namespace app\controllers;
 
-use app\models\User;
-use Yii;
-use yii\filters\auth\HttpBearerAuth;
-use yii\rest\ActiveController;
+use yii\rest\Controller;
 
-abstract class RestController extends ActiveController
+abstract class PublicRestController extends Controller
 {
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-
-        // $auth = $behaviors['authenticator'];
-        // $behaviors['authenticator'] = ['class' => HttpBearerAuth::class];
-        // $controllersWithoutBearer = ['auth'];
-        // if (in_array(Yii::$app->controller->id, $controllersWithoutBearer)) {
-        //     $behaviors['authenticator'] = $auth;
-        // }
 
         $behaviors['corsFilter'] = [
             'class' => \yii\filters\Cors::class,
@@ -31,14 +21,7 @@ abstract class RestController extends ActiveController
             ],
         ];
 
-        // avoid authentication on CORS-pre-flight requests (HTTP OPTIONS method)
-        $behaviors['authenticator']['except'] = ['options'];
-
         return $behaviors;
-    }
-
-    public function checkAccess($action, $model = null, $params = [])
-    {
     }
 
     protected function modelErrorsTo422Response($errors, $custom_error = null)
@@ -55,15 +38,5 @@ abstract class RestController extends ActiveController
             }
         }
         return $response_errors;
-    }
-
-    protected function getUserId() {
-        $token = Yii::$app->request->headers['Authorization'];
-        if ($token && strpos($token, 'Bearer ') === 0) {
-            $token = substr($token, 7);
-            $user = User::findIdentityByAccessToken($token);
-            return $user->id;
-        }
-        return;
     }
 }
