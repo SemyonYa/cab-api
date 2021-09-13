@@ -59,7 +59,8 @@ $config = [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['ctor'],
                     'extraPatterns' => [
-                        'GET ctors/tag/{tag}' => 'by-tag',
+                        'GET tag/<tag>' => 'by-tag',
+                        'OPTIONS tag/<tag>' => 'options',
                         'POST <id>/children' => 'children',
                         'OPTIONS <id>/children' => 'options'
                     ]

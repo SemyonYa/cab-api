@@ -93,4 +93,9 @@ class Ctor extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Image::className(), ['id' => 'thumb_id']);
     }
+
+    public function fields()
+    {
+        return array_merge(parent::fields(), ['ctorItems']);
+    }
 }
