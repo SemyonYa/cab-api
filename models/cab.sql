@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Сен 03 2021 г., 14:31
+-- Время создания: Сен 13 2021 г., 17:46
 -- Версия сервера: 5.7.29
 -- Версия PHP: 7.3.17
 
@@ -38,6 +38,18 @@ CREATE TABLE `ctor` (
   `tag` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Дамп данных таблицы `ctor`
+--
+
+INSERT INTO `ctor` (`id`, `title`, `subtitle`, `created_at`, `author_name`, `author_id`, `thumb_id`, `tag`) VALUES
+(1, 'test123', 'test', '2021-09-13 14:47:00', 'test', 22, 16, 'test'),
+(2, 'About', 'About Ortum clinic', '2021-09-13 14:51:00', 'i', 22, 15, 'about'),
+(3, 'test', 'test', '2021-09-13 14:58:00', 'test', 22, 14, 'test'),
+(4, 'qwe', 'qwe', '2021-09-13 16:48:00', 'qwe', 22, 15, 'qwe'),
+(5, 'About the world', 'My world', '2021-09-13 16:50:00', 'Author', 22, 12, '#qwe'),
+(6, 'The world', 'Hello, world!', '2021-09-13 16:51:00', 'new author', 22, 11, '#tag');
+
 -- --------------------------------------------------------
 
 --
@@ -51,6 +63,19 @@ CREATE TABLE `ctor_item` (
   `ctor_id` int(11) NOT NULL,
   `ordering` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `ctor_item`
+--
+
+INSERT INTO `ctor_item` (`id`, `type`, `value`, `ctor_id`, `ordering`) VALUES
+(1, 'H1', 'Test H1', 1, 0),
+(2, 'H2', 'Test H2', 1, 1),
+(3, 'Text', 'Test text', 1, 2),
+(7, 'H2', 'testh2', 3, 0),
+(8, 'Image', '21', 3, 1),
+(9, 'Text', 'qwe', 4, 0),
+(10, 'H1', 'About', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -181,13 +206,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `ctor`
 --
 ALTER TABLE `ctor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `ctor_item`
 --
 ALTER TABLE `ctor_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `image`

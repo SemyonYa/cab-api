@@ -4,16 +4,8 @@ namespace app\controllers;
 
 use app\models\Ctor;
 use app\models\CtorItem;
-use app\models\User;
-use app\models\UserIdentity;
-use Exception;
-use phpDocumentor\Reflection\Types\Integer;
 use Throwable;
 use Yii;
-use yii\web\BadRequestHttpException;
-use yii\web\HttpException;
-use yii\web\ServerErrorHttpException;
-use yii\web\UnprocessableEntityHttpException;
 
 class CtorController extends RestController
 {
@@ -23,9 +15,25 @@ class CtorController extends RestController
     {
         $actions = parent::actions();
 
-        unset($actions['create']);
+        unset($actions['create'], $actions['view']);
 
         return $actions;
+    }
+
+    // TODO: GET ctors/tag/{tag}, delete index
+    public function actionByTag($tag)
+    {
+        // TODO: Lazy
+        return Ctor::find()->where(['tag' => $tag])->all();
+    }
+
+    public function actionView($id)
+    {
+        $ctor = Ctor::find()->where(['id' => $id])->one();
+        $items = $ctor->ctorItems;
+        $ctor = $ctor->toArray();
+        $ctor['items'] = $items;
+        return $ctor;
     }
 
     public function actionChildren($id)
