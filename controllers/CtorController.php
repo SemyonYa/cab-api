@@ -30,7 +30,7 @@ class CtorController extends RestController
     {
         $items = Yii::$app->request->post('items');
 
-        if (!$items) throw new NotFoundHttpException();
+        // if (!$items) throw new NotFoundHttpException();
 
         $ctor_items = [];
         for ($index = 0; $index < count($items); $index++) {
