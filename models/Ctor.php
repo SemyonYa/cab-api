@@ -94,8 +94,16 @@ class Ctor extends \yii\db\ActiveRecord
         return $this->hasOne(Image::className(), ['id' => 'thumb_id']);
     }
 
+    // public function getImagePath()
+    // {
+    //     if ($image = Image::findOne($this->thumb_id)) {
+    //         return $image->
+    //     }
+    //     // return $this->hasOne(Image::className(), ['id' => 'thumb_id']);
+    // }
+
     public function fields()
     {
-        return array_merge(parent::fields(), ['ctorItems']);
+        return array_merge(parent::fields(), ['ctorItems', 'thumb']);
     }
 }

@@ -62,4 +62,16 @@ class CtorItem extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Ctor::className(), ['id' => 'ctor_id']);
     }
+
+    public function getImage()
+    {
+        return $this->type === 'Image'
+            ? Image::findOne($this->value)
+            : null;
+    }
+
+    public function fields()
+    {
+        return array_merge(parent::fields(), ['image']);
+    }
 }
