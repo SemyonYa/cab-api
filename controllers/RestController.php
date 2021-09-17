@@ -23,7 +23,7 @@ abstract class RestController extends ActiveController
         $behaviors['corsFilter'] = [
             'class' => \yii\filters\Cors::class,
             'cors' => [
-                'Origin' => ['http://localhost:4200'],
+                'Origin' => ['http://localhost:4200', 'http://localhost:4201'],
                 'Access-Control-Allow-Origin' => true,
                 'Access-Control-Allow-Credentials' => true,
                 'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
@@ -57,7 +57,8 @@ abstract class RestController extends ActiveController
         return $response_errors;
     }
 
-    protected function getUserId() {
+    protected function getUserId()
+    {
         $token = Yii::$app->request->headers['Authorization'];
         if ($token && strpos($token, 'Bearer ') === 0) {
             $token = substr($token, 7);

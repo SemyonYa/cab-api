@@ -9,12 +9,15 @@ use Yii;
  *
  * @property int $id
  * @property string $title
- * @property string $subtitle
+ * @property string|null $subtitle
+ * @property string|null $description
  * @property string $created_at
- * @property string $author_name
+ * @property string|null $author_name
  * @property int $author_id
- * @property int $thumb_id
+ * @property int|null $thumb_id
  * @property string|null $tag
+ * @property int $is_active 
+ * @property int $price 
  *
  * @property User $author
  * @property CtorItem[] $ctorItems
@@ -36,10 +39,13 @@ class Ctor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'subtitle', 'created_at', 'author_name', 'author_id', 'thumb_id'], 'required'],
+            [['title', 'created_at','author_id'], 'required'],
             [['title', 'subtitle'], 'string'],
+            [['title', 'created_at', 'author_id'], 'required'],
+            [['title', 'subtitle', 'description'], 'string'],
             [['created_at'], 'safe'],
             [['author_id', 'thumb_id'], 'integer'],
+            [['author_id', 'thumb_id', 'is_active', 'price'], 'integer'],
             [['author_name'], 'string', 'max' => 200],
             [['tag'], 'string', 'max' => 50],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author_id' => 'id']],
@@ -56,11 +62,14 @@ class Ctor extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'subtitle' => 'Subtitle',
+            'description' => 'Description',
             'created_at' => 'Created At',
             'author_name' => 'Author Name',
             'author_id' => 'Author ID',
             'thumb_id' => 'Thumb ID',
             'tag' => 'Tag',
+            'is_active' => 'Is Active',
+            'price' => 'Price',
         ];
     }
 
@@ -93,14 +102,6 @@ class Ctor extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Image::className(), ['id' => 'thumb_id']);
     }
-
-    // public function getImagePath()
-    // {
-    //     if ($image = Image::findOne($this->thumb_id)) {
-    //         return $image->
-    //     }
-    //     // return $this->hasOne(Image::className(), ['id' => 'thumb_id']);
-    // }
 
     public function fields()
     {
