@@ -26,7 +26,7 @@ abstract class RestController extends ActiveController
                 'Origin' => [
                     'http://localhost:4200',
                     'http://localhost:4201',
-                    'http://ortum.injini.ru',
+                    // 'http://ortum.injini.ru',
                     'http://cab.ortum.injini.ru'
                 ],
                 'Access-Control-Allow-Origin' => true,
