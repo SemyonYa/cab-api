@@ -16,11 +16,12 @@ use Yii;
  * @property int $author_id
  * @property int|null $thumb_id
  * @property string|null $tag
- * @property int $is_active
- * @property int $price
+ * @property int $is_active 
+ * @property int $price 
  *
  * @property User $author
  * @property CtorItem[] $ctorItems
+ * @property Image $thumb
  */
 class Ctor extends \yii\db\ActiveRecord
 {
@@ -38,13 +39,17 @@ class Ctor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['title', 'created_at','author_id'], 'required'],
+            [['title', 'subtitle'], 'string'],
             [['title', 'created_at', 'author_id'], 'required'],
             [['title', 'subtitle', 'description'], 'string'],
             [['created_at'], 'safe'],
+            [['author_id', 'thumb_id'], 'integer'],
             [['author_id', 'thumb_id', 'is_active', 'price'], 'integer'],
             [['author_name'], 'string', 'max' => 200],
             [['tag'], 'string', 'max' => 50],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author_id' => 'id']],
+            [['thumb_id'], 'exist', 'skipOnError' => true, 'targetClass' => Image::className(), 'targetAttribute' => ['thumb_id' => 'id']],
         ];
     }
 
