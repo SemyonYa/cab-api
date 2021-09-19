@@ -40,9 +40,9 @@ class PublicDataController extends PublicRestController
         return Image::find()->all();
     }
 
-    public function actionServices()
+    public function actionServices($region)
     {
-        return Ctor::find()->where(['tag' => 'service'])->all();
+        return Ctor::find()->where(['tag' => 'service', 'region' => $region])->all();
     }
 
     public function actionPrograms()
