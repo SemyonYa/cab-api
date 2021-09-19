@@ -18,6 +18,7 @@ use Yii;
  * @property string|null $tag
  * @property int $is_active
  * @property int $price
+ * @property string|null $region
  *
  * @property User $author
  * @property CtorItem[] $ctorItems
@@ -39,7 +40,7 @@ class Ctor extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'created_at', 'author_id'], 'required'],
-            [['title', 'subtitle', 'description'], 'string'],
+            [['title', 'subtitle', 'description', 'region'], 'string'],
             [['created_at'], 'safe'],
             [['author_id', 'thumb_id', 'is_active', 'price'], 'integer'],
             [['author_name'], 'string', 'max' => 200],
@@ -65,6 +66,7 @@ class Ctor extends \yii\db\ActiveRecord
             'tag' => 'Tag',
             'is_active' => 'Is Active',
             'price' => 'Price',
+            'region' => 'Region',
         ];
     }
 

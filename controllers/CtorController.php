@@ -21,9 +21,14 @@ class CtorController extends RestController
         return $actions;
     }
 
-    public function actionByTag($tag)
+    public function actionByTag($tag, $region = '')
     {
-        return Ctor::find()->where(['tag' => $tag])->all();
+        // return $region;
+        $query = Ctor::find()->where(['tag' => $tag]);
+        if ($region) {
+            $query = $query->andWhere(['region' => $region]);
+        }
+        return $query->all();
     }
 
     public function actionChildren($id)
@@ -80,10 +85,14 @@ class CtorController extends RestController
         // $ctor->id = Yii::$app->request->post('id');
         $ctor->title = Yii::$app->request->post('title');
         $ctor->subtitle = Yii::$app->request->post('subtitle');
+        $ctor->description = Yii::$app->request->post('description');
         $ctor->created_at = Yii::$app->request->post('created_at');
         $ctor->author_name = Yii::$app->request->post('author_name');
         $ctor->author_id = $this->userId; // Yii::$app->request->post('author_id');
         $ctor->thumb_id = Yii::$app->request->post('thumb_id');
+        $ctor->price = Yii::$app->request->post('price');
+        $ctor->region = Yii::$app->request->post('region');
+        $ctor->is_active = Yii::$app->request->post('is_active');
         $ctor->tag = Yii::$app->request->post('tag');
 
         if ($ctor->save()) {
