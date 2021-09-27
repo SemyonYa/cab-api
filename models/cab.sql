@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Сен 17 2021 г., 23:04
--- Версия сервера: 8.0.24
--- Версия PHP: 7.4.21
+-- Время создания: Сен 27 2021 г., 17:50
+-- Версия сервера: 5.7.29
+-- Версия PHP: 7.3.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,36 +28,34 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `ctor` (
-  `id` int NOT NULL,
-  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subtitle` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` int(11) NOT NULL,
+  `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subtitle` text COLLATE utf8mb4_unicode_ci,
   `description` text COLLATE utf8mb4_unicode_ci,
   `created_at` datetime NOT NULL,
-  `author_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `author_id` int NOT NULL,
-  `thumb_id` int DEFAULT NULL,
-  `tag` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `author_name` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `author_id` int(11) NOT NULL,
+  `thumb_id` int(11) DEFAULT NULL,
+  `tag` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
-  `price` int NOT NULL DEFAULT '0'
+  `price` int(11) NOT NULL DEFAULT '0',
+  `region` enum('Москва','Норильск') COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `ctor`
 --
 
-INSERT INTO `ctor` (`id`, `title`, `subtitle`, `description`, `created_at`, `author_name`, `author_id`, `thumb_id`, `tag`, `is_active`, `price`) VALUES
-(1, 'Alex Skolnick Trio', 'Материал из Википедии — свободной энциклопедии', NULL, '2020-02-02 12:12:00', 'Игорь Ольденбург', 22, 11, 'article', 1, 0),
-(2, 'Test article', 'Test article subtitle', NULL, '2020-02-02 12:12:00', 'I. Old', 22, 11, 'article', 1, 0),
-(3, 'О клинике', 'About Ortum clinic', NULL, '2021-09-11 22:21:00', 'qweqwe', 22, 11, 'about', 1, 0),
-(4, 'qwe', 'qwe', NULL, '2021-09-12 22:24:00', 'qwewrewr', 22, 12, 'teyty', 1, 0),
-(5, 'qwew', 'werery', NULL, '2021-09-12 22:24:00', 'rty', 22, 14, 'uipo;uio;', 1, 0),
-(6, 'qwq', 'werte', NULL, '2021-09-12 22:40:00', 'reyu', 22, 12, 'rtyu', 1, 0),
-(7, 'qwe2', 'qwe', NULL, '2021-09-12 22:47:00', 'qwe', 22, 11, 'qwe', 1, 0),
-(8, 'qwe', 'qwe', NULL, '2021-09-12 23:12:00', 'qwe', 22, 14, 'qwe', 1, 0),
-(9, 'test', 'test', NULL, '2021-09-12 23:33:00', 'test', 22, 20, 'test', 1, 0),
-(10, 'Мануальный терапевт', '', NULL, '2021-09-17 22:42:00', '', 22, NULL, 'position', 1, 0),
-(11, 'Игорь Ольденбург', 'Главный врач, генеральный директор', NULL, '2021-09-17 22:56:00', '', 22, 26, 'personal', 1, 0),
-(12, 'Иван Иванов', 'Мануальный терапевт', NULL, '2021-09-17 22:57:00', '', 22, 27, 'personal', 1, 0);
+INSERT INTO `ctor` (`id`, `title`, `subtitle`, `description`, `created_at`, `author_name`, `author_id`, `thumb_id`, `tag`, `is_active`, `price`, `region`) VALUES
+(1, 'Alex Skolnick Trio', 'Материал из Википедии — свободной энциклопедии', NULL, '2020-02-02 12:12:00', 'Игорь Ольденбург', 22, 11, 'article', 1, 0, NULL),
+(2, 'Test article', 'Test article subtitle', NULL, '2020-02-02 12:12:00', 'I. Old', 22, 11, 'article', 1, 0, NULL),
+(3, 'О клинике', 'About Ortum clinic', NULL, '2021-09-11 22:21:00', 'qweqwe', 22, 11, 'about', 1, 0, NULL),
+(10, 'Мануальный терапевт', '', NULL, '2021-09-17 22:42:00', '', 22, NULL, 'position', 1, 0, 'Норильск'),
+(11, 'Игорь Ольденбург', 'Главный врач, генеральный директор', NULL, '2021-09-17 22:56:00', '', 22, 26, 'personal', 1, 0, 'Норильск'),
+(12, 'Иван Иванов', 'Мануальный терапевт', NULL, '2021-09-17 22:57:00', '', 22, 27, 'personal', 1, 0, 'Норильск'),
+(14, 'Массаж ', 'Классический', 'Отличный массаж', '2021-09-19 17:04:00', 'Иванов', 22, 11, 'service', 1, 800, 'Москва'),
+(15, 'Массаж по-московски', '', '', '2021-09-19 17:37:00', '', 22, 14, 'service', 1, 10499, 'Москва'),
+(16, 'Массаж по-норильски', 'Самый норильский массаж', '', '2021-09-19 17:38:00', '', 22, 13, 'service', 1, 199, 'Норильск');
 
 -- --------------------------------------------------------
 
@@ -66,11 +64,11 @@ INSERT INTO `ctor` (`id`, `title`, `subtitle`, `description`, `created_at`, `aut
 --
 
 CREATE TABLE `ctor_item` (
-  `id` int NOT NULL,
-  `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ctor_id` int NOT NULL,
-  `ordering` int NOT NULL
+  `id` int(11) NOT NULL,
+  `type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ctor_id` int(11) NOT NULL,
+  `ordering` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -81,10 +79,6 @@ INSERT INTO `ctor_item` (`id`, `type`, `value`, `ctor_id`, `ordering`) VALUES
 (1, 'H1', 'First article block H1', 2, 0),
 (2, 'H2', 'First article block H2', 2, 1),
 (3, 'Text', 'Александр (А́лекс) Натан Ско́лник (англ. Alexander Nathan Skolnick; 29 сентября 1968, Беркли, Калифорния) — американский гитарист, играющий в разных стилях (трэш-метал и джаз).', 2, 2),
-(9, 'H1', 'test', 9, 0),
-(10, 'H2', 'Subtest', 9, 1),
-(11, 'Image', '11', 9, 2),
-(12, 'Text', 'test text', 9, 3),
 (15, 'Text', 'Александр (Алекс) Натан Сколник (англ. Alexander Nathan Skolnick; 29 сентября 1968, Беркли, Калифорния) — американский гитарист, играющий в разных стилях (трэш-метал и джаз). Наиболее известен как лид-гитарист американской трэш-метал-группы Testament. Согласно голосованиям журнала Guitar World, входит в список 100 лучших гитаристов мира[1] и в список 50 самых быстрых гитаристов мира[2]. Также Loudwire поместил его на 24 место в своем списке «Топ-66 лучших хард-рок/метал-гитаристов всех времён».', 1, 0),
 (16, 'H1', 'Состав группы', 1, 1),
 (17, 'H2', 'Нынешний состав', 1, 2),
@@ -112,13 +106,13 @@ INSERT INTO `ctor_item` (`id`, `type`, `value`, `ctor_id`, `ordering`) VALUES
 --
 
 CREATE TABLE `filial` (
-  `id` int NOT NULL,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `emails` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `addresses` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` int(11) NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` enum('Москва','Норильск') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `emails` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phones` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `addresses` text COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -126,7 +120,8 @@ CREATE TABLE `filial` (
 --
 
 INSERT INTO `filial` (`id`, `name`, `description`, `code`, `emails`, `phones`, `addresses`) VALUES
-(1, 'Клиника \"ОРТУМ\"', 'Клиника реабилитации опорно-двигательного  аппарата', 'Москва', 'moscow@ortum.ru\r\nmoscow2@ortum.ru', '+7 (000) 789-79-79\r\n+7 (000) 789-69-79\r\n+7 (000) 989-79-79', 'Москва, переулок Гранитный, 4/1');
+(1, 'Клиника \"ОРТУМ\"', 'Клиника реабилитации опорно-двигательного  аппарата', 'Москва', 'moscow@ortum.ru\r\nmoscow2@ortum.ru', '+7 (000) 789-79-79\r\n+7 (000) 789-69-79\r\n+7 (000) 989-79-79', 'Москва, переулок Гранитный, 4/1'),
+(2, 'Клиника \"ОРТУМ\"', 'Клиника реабилитации опорно-двигательного  аппарата', 'Норильск', 'moscow@ortum.ru\r\nmoscow2@ortum.ru', '+7 (000) 789-79-79\r\n+7 (000) 789-69-79\r\n+7 (000) 989-79-79', 'Норильск, пр-д Моторостроителей, 64');
 
 -- --------------------------------------------------------
 
@@ -135,8 +130,8 @@ INSERT INTO `filial` (`id`, `name`, `description`, `code`, `emails`, `phones`, `
 --
 
 CREATE TABLE `image` (
-  `id` int NOT NULL,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` int(11) NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -170,14 +165,14 @@ INSERT INTO `image` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `user` (
-  `id` int NOT NULL,
-  `first_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `login` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` enum('admin','user') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user',
+  `id` int(11) NOT NULL,
+  `first_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `login` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` enum('admin','user') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user',
   `birth` date NOT NULL,
-  `password_hash` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `auth_token` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password_hash` text COLLATE utf8mb4_unicode_ci,
+  `auth_token` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `activated` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -186,7 +181,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `login`, `role`, `birth`, `password_hash`, `auth_token`, `activated`) VALUES
-(22, 'admin', 'adm', 'admin', 'admin', '1968-10-21', '$2y$13$Ed66Z3OmuiZUcPq6P5qhW.FRuHeVbXhORcGXP1u9uC/eh2z30I9Fy', 'meD8P8n9aYrm72JYYkuLwNkKYmrwmLxHboLyBtSH8RsEcDNJ0ApQxwfdUjaI8JLr89dAp9RbQEsbouljMNGmWKOGbwRUnwHCnCzb7-dW4Q8UFLPzWAljKgcQF_U8Lpmy', 1),
+(22, 'admin', 'adm', 'admin', 'admin', '1968-10-21', '$2y$13$Ed66Z3OmuiZUcPq6P5qhW.FRuHeVbXhORcGXP1u9uC/eh2z30I9Fy', '6OOL5Mo8pBFt8FESdc-T85bkNs8vgylfRFwtqfpu6jBgbYc526z6W8UXwKf9eIHuXBvGg8KbZZfV8u1EBmA4D7YPHZLKMshB38qd8P6IKtofpGAqiU-cYfZCeVPbTGqQ', 1),
 (23, 'qwe', 'qwe', 'qwe', 'user', '2020-12-01', '$2y$13$AiSKqqZeO47XZAaKXQw3P.E60.zndwohEqKow.RNSHa8xunB6YIza', NULL, 1),
 (24, 'qwe', 'qwe', 'qwe1', 'user', '2020-12-01', '$2y$13$UbJ.4pi.M.Pm5iRSZtcM1uPWm3wM3NqLpwzd/tPGRB58c7ByMtEpW', NULL, 1);
 
@@ -236,25 +231,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `ctor`
 --
 ALTER TABLE `ctor`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `ctor_item`
 --
 ALTER TABLE `ctor_item`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT для таблицы `image`
 --
 ALTER TABLE `image`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -270,7 +265,7 @@ ALTER TABLE `ctor`
 -- Ограничения внешнего ключа таблицы `ctor_item`
 --
 ALTER TABLE `ctor_item`
-  ADD CONSTRAINT `ctor_item_ibfk_1` FOREIGN KEY (`ctor_id`) REFERENCES `ctor` (`id`);
+  ADD CONSTRAINT `ctor_item_ibfk_1` FOREIGN KEY (`ctor_id`) REFERENCES `ctor` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
